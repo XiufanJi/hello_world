@@ -15,9 +15,46 @@ mvn package'''
       }
     }
 
-    stage('results') {
+    stage('package') {
       steps {
         archiveArtifacts 'target/*.jar'
+      }
+    }
+
+    stage('run packge') {
+      steps {
+        sh '''#!/bin/bash
+echo "===copy file from container to local system==="
+echo -e "\\n"
+cd buildartifacts
+parentdir=\'hello_world_master\'
+
+if test -d ./${parentdir}
+then
+    echo "the target directory already exists"
+else
+    echo "No such directory, create one"
+	mkdir $parentdir
+fi
+
+cd $parentdir
+childdir=`date +%Y%m%d`
+if test -d ./${childdir}
+then
+    echo "the target directory already exists"
+else
+    echo "No such directory, create one"
+	mkdir `date +%Y%m%d`
+fi
+
+cd $childdir
+docker cp myjenkins:/var/jenkins_home/workspace/hello_world_master/target/CITest-1.0-SNAPSHOT.jar .
+echo "===begin running file==="
+echo -e "\\n"
+java -jar CITest-1.0-SNAPSHOT.jar
+echo -e "\\n"
+echo "===complete!==="
+'''
       }
     }
 
