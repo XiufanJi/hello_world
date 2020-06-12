@@ -26,7 +26,7 @@ mvn package'''
         sh '''#!/bin/bash
 echo "===copy file from container to local system==="
 echo -e "\\n"
-cd buildartifacts
+cd /home/buildartifacts
 parentdir=\'hello_world_master\'
 
 if test -d ./${parentdir}
