@@ -51,9 +51,9 @@ then
 		echo "No such directory, create one"
 		mkdir `date +%Y%m%d`
 	fi
-	if [ $? -eq 0]; then cd $childdir; fi
+	if [ $? -eq 0 ]; then cd $childdir; fi
 	cp -r /var/jenkins_home/workspace/hello_world_master/target/CITest-1.0-SNAPSHOT.jar .
-	if [$? -eq 0]
+	if [ $? -eq 0 ]
 	then 
 	    echo "===begin running file==="
 	    echo -e "\n"
